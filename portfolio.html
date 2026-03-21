@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ALEX VANCE — Videographer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@400;600&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --black: #050507;
+    --deep: #0c0c10;
+    --surface: #12121a;
+    --border: #1e1e2e;
+    --accent: #c8a96e;
+    --accent2: #e8c87a;
+    --dim: #4a4a60;
+    --muted: #8888aa;
+    --white: #f0ede8;
+    --red: #c0392b;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s ease;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(200,169,110,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: all 0.15s ease;
+  }
+  body:hover .cursor-ring { opacity: 1; }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9997;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 60px;
+    background: linear-gradient(to bottom, rgba(5,5,7,0.95), transparent);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 4px;
+    color: var(--accent);
+  }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--accent);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* HERO */
+  #hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 60px 80px;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 60% 40%, rgba(200,169,110,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(192,57,43,0.04) 0%, transparent 50%),
+      linear-gradient(135deg, #050507 0%, #0a0a12 50%, #080810 100%);
+  }
+  .hero-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,169,110,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,169,110,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+  }
+  .hero-reel {
+    position: absolute;
+    top: 50%; right: 60px;
+    transform: translateY(-50%);
+    width: 520px; height: 320px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    opacity: 0.85;
+  }
+  .hero-reel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 60%, rgba(5,5,7,0.8));
+    z-index: 1;
+  }
+  .reel-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #0c0c18, #181828);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .play-btn {
+    width: 64px; height: 64px;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 1.4rem;
+    transition: all 0.3s;
+    cursor: none;
+  }
+  .play-btn:hover {
+    background: var(--accent);
+    color: var(--black);
+    transform: scale(1.1);
+  }
+  .reel-label {
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .hero-reel-tag {
+    position: absolute;
+    bottom: 16px; right: 16px;
+    z-index: 2;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(200,169,110,0.3);
+    padding: 4px 10px;
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 640px; }
+  .hero-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px; height: 1px;
+    background: var(--accent);
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 9vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    margin-bottom: 28px;
+    animation: fadeUp 1s ease both;
+  }
+  .hero-title span { color: var(--accent); }
+  .hero-sub {
+    font-size: 0.9rem;
+    line-height: 1.9;
+    color: var(--muted);
+    max-width: 420px;
+    margin-bottom: 48px;
+    animation: fadeUp 1s 0.2s ease both;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 20px;
+    animation: fadeUp 1s 0.4s ease both;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--accent);
+    color: var(--black);
+    padding: 14px 32px;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 400;
+    transition: all 0.3s;
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid var(--dim);
+    color: var(--muted);
+    padding: 14px 32px;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px; right: 60px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dim);
+    writing-mode: vertical-rl;
+    z-index: 2;
+  }
+  .scroll-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+  @keyframes scrollPulse {
+    0%,100% { opacity: 0.3; } 50% { opacity: 1; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION BASE */
+  section { padding: 120px 60px; }
+  .section-label {
+    font-size: 0.6rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 30px; height: 1px;
+    background: var(--accent);
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 64px;
+  }
+
+  /* ABOUT */
+  #about {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-visual {
+    position: relative;
+    height: 500px;
+  }
+  .about-img-frame {
+    position: absolute;
+    top: 0; left: 0;
+    width: 80%; height: 80%;
+    background: linear-gradient(135deg, #12121e, #1a1a2a);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dim);
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .about-img-frame::after {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(200,169,110,0.15);
+  }
+  .about-accent-box {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 45%; height: 45%;
+    background: var(--accent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  .about-accent-box .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--black);
+    line-height: 1;
+  }
+  .about-accent-box .num-label {
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.6);
+  }
+  .about-text p {
+    color: var(--muted);
+    line-height: 1.9;
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+  }
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .stat-item {
+    border-left: 2px solid var(--accent);
+    padding-left: 20px;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem;
+    color: var(--white);
+    letter-spacing: 2px;
+  }
+  .stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+
+  /* WORK */
+  #work { background: var(--black); }
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .work-item {
+    position: relative;
+    aspect-ratio: 16/10;
+    background: var(--surface);
+    overflow: hidden;
+    cursor: none;
+    group: true;
+  }
+  .work-item:first-child {
+    grid-column: span 2;
+    aspect-ratio: unset;
+  }
+  .work-thumb {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.6s ease;
+  }
+  .work-item:hover .work-thumb { transform: scale(1.04); }
+  .work-thumb-inner {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #0e0e18 0%, #1a1a28 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .work-thumb-icon {
+    font-size: 2rem;
+    opacity: 0.2;
+  }
+  .work-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(5,5,7,0.95) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 28px;
+  }
+  .work-item:hover .work-overlay { opacity: 1; }
+  .work-cat {
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .work-title-card {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .work-year {
+    font-size: 0.7rem;
+    color: var(--dim);
+  }
+
+  /* SKILLS */
+  #skills {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+  }
+  .skills-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .skills-intro {
+    position: sticky;
+    top: 120px;
+  }
+  .skills-intro p {
+    color: var(--muted);
+    line-height: 1.9;
+    font-size: 0.95rem;
+    margin-bottom: 40px;
+  }
+  .skills-categories { display: flex; flex-direction: column; gap: 40px; }
+  .skill-cat-title {
+    font-size: 0.6rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-bars { display: flex; flex-direction: column; gap: 16px; }
+  .skill-row { display: flex; flex-direction: column; gap: 8px; }
+  .skill-info { display: flex; justify-content: space-between; align-items: center; }
+  .skill-name { font-size: 0.8rem; color: var(--white); letter-spacing: 1px; }
+  .skill-pct { font-size: 0.7rem; color: var(--dim); font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px; }
+  .skill-track {
+    height: 2px;
+    background: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-fill {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.2s cubic-bezier(0.4,0,0.2,1);
+  }
+  .skill-fill.animate { transform: scaleX(1); }
+
+  /* CONTACT */
+  #contact {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+  }
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-info h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 3px;
+    margin-bottom: 24px;
+    color: var(--white);
+  }
+  .contact-info p {
+    color: var(--muted);
+    line-height: 1.9;
+    font-size: 0.9rem;
+    margin-bottom: 48px;
+  }
+  .contact-details { display: flex; flex-direction: column; gap: 20px; }
+  .contact-detail {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .contact-detail-icon {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 20px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group label {
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--white);
+    padding: 14px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s;
+    resize: none;
+    cursor: none;
+    appearance: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--accent); }
+  .form-group textarea { height: 130px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .btn-submit {
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    padding: 16px 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: none;
+    align-self: flex-start;
+    transition: all 0.3s;
+    font-weight: 400;
+  }
+  .btn-submit:hover { background: var(--accent2); transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--deep);
+    border-top: 1px solid var(--border);
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 4px;
+    color: var(--accent);
+  }
+  .footer-copy {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    color: var(--dim);
+    text-transform: uppercase;
+  }
+  .footer-social { display: flex; gap: 20px; }
+  .footer-social a {
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--dim);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-social a:hover { color: var(--accent); }
+
+  /* Divider */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.3;
+    margin: 0;
+  }
+
+  /* Animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 24px 28px; }
+    section { padding: 80px 28px; }
+    .about-grid, .skills-layout, .contact-layout { grid-template-columns: 1fr; gap: 48px; }
+    .work-grid { grid-template-columns: 1fr; }
+    .work-item:first-child { grid-column: span 1; }
+    footer { flex-direction: column; gap: 20px; text-align: center; }
+    .hero-reel { display: none; }
+    #hero { padding: 0 28px 80px; }
+    .hero-title { font-size: 4.5rem; }
+    .nav-links { display: none; }
+    .hero-scroll { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <div class="nav-logo">AV</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+
+  <div class="hero-reel">
+    <div class="reel-placeholder">
+      <div class="play-btn">▶</div>
+      <div class="reel-label">2024 Showreel</div>
+    </div>
+    <div class="hero-reel-tag">4K · HDR</div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Videographer &amp; Director</div>
+    <h1 class="hero-title">ALEX<br><span>VANCE</span></h1>
+    <p class="hero-sub">Cinematic storytelling through the lens. Crafting visual narratives for brands, artists, and bold ideas — frame by frame.</p>
+    <div class="hero-cta">
+      <a href="#work" class="btn-primary">View Work →</a>
+      <a href="#contact" class="btn-ghost">Let's Talk</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <div class="about-img-frame">[ Portrait ]</div>
+      <div class="about-accent-box">
+        <span class="num">7+</span>
+        <span class="num-label">Years of Experience</span>
+      </div>
+    </div>
+    <div class="about-text reveal">
+      <div class="section-label">About</div>
+      <h2 class="section-title">THE<br>STORY<br>BEHIND</h2>
+      <p>I'm Alex Vance — a videographer and visual director based in Chicago, specializing in cinematic storytelling for brands, musicians, and creatives who refuse to be ordinary.</p>
+      <p>From concept through final cut, I obsess over every frame — the light, the motion, the emotion. My work sits at the intersection of technical precision and raw artistic vision.</p>
+      <p>Whether it's a brand film, music video, or documentary, I bring the same intensity: real stories told beautifully.</p>
+      <div class="about-stats">
+        <div class="stat-item">
+          <div class="stat-num">120+</div>
+          <div class="stat-label">Projects Delivered</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">40+</div>
+          <div class="stat-label">Brand Clients</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">12</div>
+          <div class="stat-label">Award Nominations</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Countries Filmed In</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WORK -->
+<section id="work">
+  <div class="section-label reveal">Selected Work</div>
+  <h2 class="section-title reveal">THE<br>REEL</h2>
+
+  <div class="work-grid">
+    <div class="work-item reveal">
+      <div class="work-thumb">
+        <div class="work-thumb-inner">
+          <div class="work-thumb-icon">🎬</div>
+        </div>
+      </div>
+      <div class="work-overlay">
+        <div class="work-cat">Brand Film</div>
+        <div class="work-title-card">NOVA COLLECTIVE</div>
+        <div class="work-year">2024 · 4K Commercial</div>
+      </div>
+    </div>
+
+    <div class="work-item reveal">
+      <div class="work-thumb">
+        <div class="work-thumb-inner">
+          <div class="work-thumb-icon">🎵</div>
+        </div>
+      </div>
+      <div class="work-overlay">
+        <div class="work-cat">Music Video</div>
+        <div class="work-title-card">MIDNIGHT SIGNAL</div>
+        <div class="work-year">2024 · Director's Cut</div>
+      </div>
+    </div>
+
+    <div class="work-item reveal">
+      <div class="work-thumb">
+        <div class="work-thumb-inner">
+          <div class="work-thumb-icon">🏙️</div>
+        </div>
+      </div>
+      <div class="work-overlay">
+        <div class="work-cat">Documentary</div>
+        <div class="work-title-card">CITY PULSE</div>
+        <div class="work-year">2023 · Short Film</div>
+      </div>
+    </div>
+
+    <div class="work-item reveal">
+      <div class="work-thumb">
+        <div class="work-thumb-inner">
+          <div class="work-thumb-icon">🌿</div>
+        </div>
+      </div>
+      <div class="work-overlay">
+        <div class="work-cat">Brand Campaign</div>
+        <div class="work-title-card">TERRA STUDIO</div>
+        <div class="work-year">2023 · Campaign Series</div>
+      </div>
+    </div>
+
+    <div class="work-item reveal">
+      <div class="work-thumb">
+        <div class="work-thumb-inner">
+          <div class="work-thumb-icon">✨</div>
+        </div>
+      </div>
+      <div class="work-overlay">
+        <div class="work-cat">Event Film</div>
+        <div class="work-title-card">LUMINARY GALA</div>
+        <div class="work-year">2023 · Event Coverage</div>
+      </div>
+    </div>
+
+    <div class="work-item reveal">
+      <div class="work-thumb">
+        <div class="work-thumb-inner">
+          <div class="work-thumb-icon">🎭</div>
+        </div>
+      </div>
+      <div class="work-overlay">
+        <div class="work-cat">Narrative</div>
+        <div class="work-title-card">GHOST HOUR</div>
+        <div class="work-year">2022 · Short Narrative</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="skills-layout">
+    <div class="skills-intro reveal">
+      <div class="section-label">Capabilities</div>
+      <h2 class="section-title">CRAFT &amp;<br>TOOLS</h2>
+      <p>A decade of hands-on work with industry-standard tools, techniques, and creative instincts that come from doing the work — not just talking about it.</p>
+      <a href="#contact" class="btn-primary" style="display:inline-flex;margin-top:16px;">Work With Me →</a>
+    </div>
+
+    <div class="skills-categories reveal">
+      <div>
+        <div class="skill-cat-title">Production</div>
+        <div class="skill-bars">
+          <div class="skill-row">
+            <div class="skill-info"><span class="skill-name">Cinematography</span><span class="skill-pct">95%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:95%"></div></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-info"><span class="skill-name">Directing</span><span class="skill-pct">90%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:90%"></div></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-info"><span class="skill-name">Lighting Design</span><span class="skill-pct">88%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:88%"></div></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-info"><span class="skill-name">Drone Operation (FAA)</span><span class="skill-pct">82%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:82%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="skill-cat-title">Post-Production</div>
+        <div class="skill-bars">
+          <div class="skill-row">
+            <div class="skill-info"><span class="skill-name">DaVinci Resolve</span><span class="skill-pct">96%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:96%"></div></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-info"><span class="skill-name">Adobe Premiere Pro</span><span class="skill-pct">92%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:92%"></div></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-info"><span class="skill-name">After Effects</span><span class="skill-pct">80%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:80%"></div></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-info"><span class="skill-name">Color Grading</span><span class="skill-pct">93%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:93%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="skill-cat-title">Cameras & Gear</div>
+        <div class="skill-bars">
+          <div class="skill-row">
+            <div class="skill-info"><span class="skill-name">Sony FX3 / FX6</span><span class="skill-pct">97%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:97%"></div></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-info"><span class="skill-name">BMPCC 6K Pro</span><span class="skill-pct">88%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:88%"></div></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-info"><span class="skill-name">RED Komodo</span><span class="skill-pct">75%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:75%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label reveal">Get In Touch</div>
+  <h2 class="section-title reveal">LET'S<br>CREATE</h2>
+  <div class="contact-layout">
+    <div class="contact-info reveal">
+      <p>Have a project in mind? I'd love to hear about it. Whether it's a brand film, music video, or something entirely new — let's talk about what we can build together.</p>
+      <div class="contact-details">
+        <div class="contact-detail">
+          <div class="contact-detail-icon">✉</div>
+          alex@alexvance.com
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📍</div>
+          Chicago, Illinois — Available Worldwide
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📅</div>
+          Currently booking for Q2 2026
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" placeholder="Your name" />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="your@email.com" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Project Type</label>
+        <select>
+          <option value="" disabled selected>Select a project type</option>
+          <option>Brand Film</option>
+          <option>Music Video</option>
+          <option>Documentary</option>
+          <option>Event Coverage</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell me about your project..."></textarea>
+      </div>
+      <button class="btn-submit">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">AV</div>
+  <div class="footer-copy">© 2026 Alex Vance. All rights reserved.</div>
+  <div class="footer-social">
+    <a href="#">Instagram</a>
+    <a href="#">Vimeo</a>
+    <a href="#">YouTube</a>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .work-item, .play-btn').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+      ring.style.transform = 'translate(-50%,-50%) scale(1.5)';
+      ring.style.borderColor = 'rgba(200,169,110,0.8)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.borderColor = 'rgba(200,169,110,0.5)';
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Skill bar animation
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.skill-fill').forEach(fill => {
+          fill.classList.add('animate');
+        });
+        skillObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.skills-categories').forEach(el => skillObserver.observe(el));
+
+  // Nav background on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.style.background = 'rgba(5,5,7,0.97)';
+      nav.style.backdropFilter = 'blur(12px)';
+    } else {
+      nav.style.background = 'linear-gradient(to bottom, rgba(5,5,7,0.95), transparent)';
+      nav.style.backdropFilter = 'none';
+    }
+  });
+</script>
+</body>
+</html>
