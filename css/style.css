@@ -763,3 +763,8 @@ section { padding: 120px 60px; }
   vertical-align: middle;
   margin-left: 8px;
 }
+a.work-item {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
