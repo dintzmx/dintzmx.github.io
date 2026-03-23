@@ -744,3 +744,22 @@ section { padding: 120px 60px; }
   .nav-links { display: none; }
   .hero-scroll { display: none; }
 }
+.work-crew {
+  font-size: 0.6rem;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-top: 6px;
+  line-height: 1.6;
+}
+
+.work-soon {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 2px 8px;
+  vertical-align: middle;
+  margin-left: 8px;
+}
