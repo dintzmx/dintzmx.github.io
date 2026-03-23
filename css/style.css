@@ -97,7 +97,7 @@ nav {
 }
 .nav-links {
   display: flex;
-  gap: 40px;
+  gap: 100px;
   list-style: none;
 }
 .nav-links a {
