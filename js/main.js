@@ -76,10 +76,8 @@ window.addEventListener('scroll', () => {
   if (window.scrollY > 60) {
     nav.style.background = 'transparent';
     nav.style.backdropFilter = 'none';
-    if (window.innerWidth <= 900) {
-      navLogo.style.opacity = '0';
-      navLogo.style.pointerEvents = 'none';
-    }
+    navLogo.style.opacity = '0';
+    navLogo.style.pointerEvents = 'none';
   } else {
     nav.style.background = 'linear-gradient(to bottom, rgba(5,5,7,0.95), transparent)';
     nav.style.backdropFilter = 'none';
