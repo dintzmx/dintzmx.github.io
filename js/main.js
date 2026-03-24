@@ -103,3 +103,22 @@ mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'))
 document.querySelectorAll('.mobile-link').forEach(link => {
   link.addEventListener('click', () => mobileMenu.classList.remove('open'));
 });
+
+/* ----- 6. Contact Form ----- */
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(contactForm);
+    const response = await fetch('https://formspree.io/f/xykbgkwl', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (response.ok) {
+      contactForm.innerHTML = '<p style="color:var(--accent);letter-spacing:2px;text-transform:uppercase;font-size:0.85rem;">Message sent! I\'ll be in touch soon.</p>';
+    } else {
+      contactForm.innerHTML = '<p style="color:var(--red);letter-spacing:2px;text-transform:uppercase;font-size:0.85rem;">Something went wrong. Please email me directly at dintzmx@gmail.com</p>';
+    }
+  });
+}
