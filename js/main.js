@@ -72,17 +72,24 @@ document.querySelectorAll('.skills-categories').forEach(el => skillObserver.obse
 /* ----- 4. Nav Scroll Behaviour ----- */
 const nav = document.querySelector('nav');
 const navLogo = document.querySelector('.nav-logo');
+const navLinks = document.querySelector('.nav-links');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 60) {
     nav.style.background = 'transparent';
     nav.style.backdropFilter = 'none';
     navLogo.style.opacity = '0';
     navLogo.style.pointerEvents = 'none';
+    if (window.innerWidth > 900) {
+      navLinks.style.opacity = '0';
+      navLinks.style.pointerEvents = 'none';
+    }
   } else {
     nav.style.background = 'linear-gradient(to bottom, rgba(5,5,7,0.95), transparent)';
     nav.style.backdropFilter = 'none';
     navLogo.style.opacity = '1';
     navLogo.style.pointerEvents = 'auto';
+    navLinks.style.opacity = '1';
+    navLinks.style.pointerEvents = 'auto';
   }
 });
 
