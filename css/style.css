@@ -944,3 +944,8 @@ a.work-item {
   .about-visual { height: 320px; }
   .about-accent-box { display: none; }
 }
+
+.contact-info {
+  opacity: 1 !important;
+  transform: none !important;
+}
