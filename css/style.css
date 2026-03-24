@@ -768,3 +768,105 @@ a.work-item {
   text-decoration: none;
   color: inherit;
 }
+
+/* ----- MOBILE FIXES / FULL RESPONSIVE ----- */
+@media (max-width: 900px) {
+
+  /* Hero Section */
+  #hero {
+    padding: 0 20px 60px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .hero-title {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    line-height: 1.1;
+  }
+  .hero-sub {
+    font-size: 0.85rem;
+    max-width: 100%;
+  }
+
+  /* About Section */
+  .about-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .about-visual {
+    height: 300px;
+  }
+  .about-accent-box {
+    width: 60%;
+    height: 40%;
+  }
+  .about-text p {
+    font-size: 0.9rem;
+  }
+
+  /* Work / Projects Section */
+  .work-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .work-item {
+    aspect-ratio: auto;
+  }
+  .work-item:first-child {
+    grid-column: span 1;
+  }
+  .work-thumb-inner {
+    padding: 16px;
+    gap: 8px;
+  }
+  .work-title-card {
+    font-size: 1.2rem;
+  }
+  .work-year, .work-crew, .work-soon {
+    font-size: 0.55rem;
+  }
+
+  /* Skills Section */
+  .skills-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .skills-intro {
+    position: relative;
+    top: 0;
+  }
+  .skill-name { font-size: 0.75rem; }
+  .skill-pct { font-size: 0.65rem; }
+
+  /* Contact Section */
+  .contact-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .contact-info h3 { font-size: 2.2rem; }
+  .contact-info p { font-size: 0.85rem; }
+  .form-row { grid-template-columns: 1fr; }
+
+  /* Downloads / PDF Viewer */
+  .downloads-grid,
+  .pdf-viewer-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .pdf-embed-wrap { height: 400px; }
+
+  /* Footer */
+  footer {
+    padding: 32px 20px;
+    gap: 16px;
+  }
+
+  /* Reduce section padding globally */
+  section {
+    padding: 60px 20px;
+  }
+}
