@@ -73,10 +73,10 @@ document.querySelectorAll('.skills-categories').forEach(el => skillObserver.obse
 const nav = document.querySelector('nav');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 60) {
-    nav.style.background = 'rgba(5,5,7,0.97)';
-    nav.style.backdropFilter = 'blur(12px)';
+    nav.classList.add('scrolled');
+    nav.style.backdropFilter = 'none';
   } else {
-    nav.style.background = 'linear-gradient(to bottom, rgba(5,5,7,0.95), transparent)';
+    nav.classList.remove('scrolled');
     nav.style.backdropFilter = 'none';
   }
 });
